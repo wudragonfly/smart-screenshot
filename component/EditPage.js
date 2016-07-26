@@ -1,5 +1,6 @@
 import React, {
-    Component
+    Component,
+    CSSPropertyOperations,
 } from 'react';
 import {
     AppRegistry,
@@ -26,10 +27,35 @@ export default class EditPage extends Component {
 
     }
 
+    topLeftButtonClick = (index) => {
+        this.props.images[index].topInset +=5;
+        this.forceUpdate();
+    };
+
+    topRightButtonClick = (index) => {
+        this.props.images[index].topInset -=5;
+        this.forceUpdate();
+    };
+
+    bottomLeftButtonClick = (index) => {
+        this.props.images[index].bottomInset -=5;
+        this.forceUpdate();
+    };
+
+    bottomRightButtonClick = (index) => {
+        this.props.images[index].bottomInset +=5;
+        this.forceUpdate();
+    };
+
     render() {
-        this.props.images.map(function(item, index){
-            item.topInset = 20;
-            item.bottomInset = 20;
+        let imageCount = this.props.images.length;
+        this.props.images.map((item, index) => {
+            // if (index !== 0) {
+                item.topInset = item.topInset === undefined ? 20 : item.topInset;
+            // }
+            // if (index !== imageCount) {
+                item.bottomInset = item.bottomInset === undefined ? 20 : item.bottomInset;
+            // }
         });
 
         let imageHeight = this.props.images[0].height;
@@ -44,27 +70,32 @@ export default class EditPage extends Component {
                 <Text style={styles.headerText}>Smart Screenshot</Text>
                 <View style={styles.contentView}>
                 {
-                    this.props.images.map(function(item, index){
+                    this.props.images.map((item, index) => {
                         let currentWrapperHeight = resizeHeight - item.topInset - item.bottomInset;
+                        let viewRef = "view" + index;
+                        let imageRef = "image" + index;
                         return (
-                            <View key={index} style={[styles.imageWrapper, {height:currentWrapperHeight}]}>
+                            <View key={index}
+                                  style={[styles.imageWrapper, {height:currentWrapperHeight}]}
+                                  ref={viewRef}>
                                 <Image source={{uri: item.path}}
-                                   style={[styles.absoluteImage, {height: resizeHeight, top: -item.topInset}]}
+                                       style={[styles.absoluteImage, {height: resizeHeight, top: -item.topInset}]}
+                                       ref={imageRef}
                                 />
                                 <View style={[styles.icons, {height:currentWrapperHeight}]}>
                                     <View style={styles.topIcons}>
-                                        <TouchableOpacity style={[styles.topLeftIcon]}>
+                                        <TouchableOpacity style={[styles.topLeftIcon]} onPress={() => this.topLeftButtonClick(index)}>
                                             <Icon name="arrow-up" size={18} color="#ffd" style={styles.icon}/>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={[styles.topRightIcon]}>
+                                        <TouchableOpacity style={[styles.topRightIcon]} onPress={() => this.topRightButtonClick(index)}>
                                             <Icon name="arrow-down" size={18} color="#ffd" style={styles.icon}/>
                                         </TouchableOpacity>
                                     </View>
                                     <View style={styles.bottomIcons}>
-                                        <TouchableOpacity style={[styles.bottomLeftIcon]}>
+                                        <TouchableOpacity style={[styles.bottomLeftIcon]} onPress={() => this.bottomLeftButtonClick(index)}>
                                             <Icon name="arrow-down" size={18} color="#ffd" style={styles.icon}/>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={[styles.bottomRightIcon]}>
+                                        <TouchableOpacity style={[styles.bottomRightIcon]} onPress={() => this.bottomRightButtonClick(index)}>
                                             <Icon name="arrow-up" size={18} color="#ffd" style={styles.icon}/>
                                         </TouchableOpacity>
                                     </View>
