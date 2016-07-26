@@ -19,49 +19,90 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default class EditPage extends Component {
     constructor() {
         super();
-        this.state = {
+    }
+
+    topLeftButtonPress = (index) => {
+        if (this.props.images[index].topInset + this.props.images[index].bottomInset < this.props.images[index].resizeHeight) {
+            this.props.images[index].topInset +=1;
+            this.forceUpdate();
         }
-    }
-
-    componentDidMount() {
-
-    }
-
-    topLeftButtonClick = (index) => {
-        this.props.images[index].topInset +=5;
-        this.forceUpdate();
     };
 
-    topRightButtonClick = (index) => {
-        this.props.images[index].topInset -=5;
-        this.forceUpdate();
+    topLeftButtonPressIn = (index) => {
+        this.topLeftTimer = setInterval(() => {this.topLeftButtonPress(index);}, 120);
     };
 
-    bottomLeftButtonClick = (index) => {
-        this.props.images[index].bottomInset -=5;
-        this.forceUpdate();
+    topLeftButtonPressOut = () => {
+        clearInterval(this.topLeftTimer);
     };
 
-    bottomRightButtonClick = (index) => {
-        this.props.images[index].bottomInset +=5;
-        this.forceUpdate();
+    topRightButtonPress = (index) => {
+        if (this.props.images[index].topInset > 0) {
+            this.props.images[index].topInset -=1;
+            this.forceUpdate();
+        }
     };
+
+    topRightButtonPressIn = (index) => {
+        this.topRightTimer = setInterval(() => {this.topRightButtonPress(index);}, 120);
+    };
+
+    topRightButtonPressOut = () => {
+        clearInterval(this.topRightTimer);
+    };
+
+    bottomLeftButtonPress = (index) => {
+        if (this.props.images[index].bottomInset > 0) {
+            this.props.images[index].bottomInset -=1;
+            this.forceUpdate();
+        }
+    };
+
+    bottomLeftButtonPressIn = (index) => {
+        this.bottomLeftTimer = setInterval(() => {this.bottomLeftButtonPress(index);}, 120);
+    };
+
+    bottomLeftButtonPressOut = () => {
+        clearInterval(this.bottomLeftTimer);
+    };
+
+    bottomRightButtonPress = (index) => {
+        if (this.props.images[index].topInset + this.props.images[index].bottomInset < this.props.images[index].resizeHeight) {
+            this.props.images[index].bottomInset +=1;
+            this.forceUpdate();
+        }
+    };
+
+    bottomRightButtonPressIn = (index) => {
+        this.bottomRightTimer = setInterval(() => {this.bottomRightButtonPress(index);}, 120);
+    };
+
+    bottomRightButtonPressOut = () => {
+        clearInterval(this.bottomRightTimer);
+    };
+
 
     render() {
         let imageCount = this.props.images.length;
-        this.props.images.map((item, index) => {
-            // if (index !== 0) {
-                item.topInset = item.topInset === undefined ? 20 : item.topInset;
-            // }
-            // if (index !== imageCount) {
-                item.bottomInset = item.bottomInset === undefined ? 20 : item.bottomInset;
-            // }
-        });
-
         let imageHeight = this.props.images[0].height;
         let imageWidth = this.props.images[0].width;
         let windowWidth = Dimensions.get('window').width;
         let resizeHeight = imageHeight / imageWidth * windowWidth;
+        this.props.images.map((item, index) => {
+            item.resizeHeight = resizeHeight;
+            if (index !== 0) {
+                item.topInset = item.topInset === undefined ? 20 : item.topInset;
+            } else {
+                item.topInset = item.topInset === undefined ? 0 : item.topInset;
+            }
+            if (index !== imageCount - 1) {
+                item.bottomInset = item.bottomInset === undefined ? 20 : item.bottomInset;
+            } else {
+                item.bottomInset = item.bottomInset === undefined ? 0 : item.bottomInset;
+            }
+        });
+
+
 
         return (
             <ScrollView style={styles.scrollView}
@@ -84,18 +125,30 @@ export default class EditPage extends Component {
                                 />
                                 <View style={[styles.icons, {height:currentWrapperHeight}]}>
                                     <View style={styles.topIcons}>
-                                        <TouchableOpacity style={[styles.topLeftIcon]} onPress={() => this.topLeftButtonClick(index)}>
+                                        <TouchableOpacity style={[styles.topLeftIcon]}
+                                                          onPress={() => this.topLeftButtonPress(index)}
+                                                          onPressIn={() => this.topLeftButtonPressIn(index)}
+                                                          onPressOut={() => this.topLeftButtonPressOut()}>
                                             <Icon name="arrow-up" size={18} color="#ffd" style={styles.icon}/>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={[styles.topRightIcon]} onPress={() => this.topRightButtonClick(index)}>
+                                        <TouchableOpacity style={[styles.topRightIcon]}
+                                                          onPress={() => this.topRightButtonPress(index)}
+                                                          onPressIn={() => this.topRightButtonPressIn(index)}
+                                                          onPressOut={() => this.topRightButtonPressOut()}>
                                             <Icon name="arrow-down" size={18} color="#ffd" style={styles.icon}/>
                                         </TouchableOpacity>
                                     </View>
                                     <View style={styles.bottomIcons}>
-                                        <TouchableOpacity style={[styles.bottomLeftIcon]} onPress={() => this.bottomLeftButtonClick(index)}>
+                                        <TouchableOpacity style={[styles.bottomLeftIcon]}
+                                                          onPress={() => this.bottomLeftButtonPress(index)}
+                                                          onPressIn={() => this.bottomLeftButtonPressIn(index)}
+                                                          onPressOut={() => this.bottomLeftButtonPressOut()}>
                                             <Icon name="arrow-down" size={18} color="#ffd" style={styles.icon}/>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={[styles.bottomRightIcon]} onPress={() => this.bottomRightButtonClick(index)}>
+                                        <TouchableOpacity style={[styles.bottomRightIcon]}
+                                                          onPress={() => this.bottomRightButtonPress(index)}
+                                                          onPressIn={() => this.bottomRightButtonPressIn(index)}
+                                                          onPressOut={() => this.bottomRightButtonPressOut()}>
                                             <Icon name="arrow-up" size={18} color="#ffd" style={styles.icon}/>
                                         </TouchableOpacity>
                                     </View>
