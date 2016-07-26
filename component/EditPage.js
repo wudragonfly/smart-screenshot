@@ -40,6 +40,9 @@ export default class EditPage extends Component {
         return (
             <ScrollView style={styles.scrollView}
                         showsVerticalScrollIndicator={false}>
+                <Image style={styles.headerLogo} source={require('../image/logo.png')}/>
+                <Text style={styles.headerText}>Smart Screenshot</Text>
+                <View style={styles.contentView}>
                 {
                     this.props.images.map(function(item, index){
                         let currentWrapperHeight = resizeHeight - item.topInset - item.bottomInset;
@@ -70,6 +73,7 @@ export default class EditPage extends Component {
                         )
                     })
                 }
+                </View>
             </ScrollView>
         )
     }
@@ -78,6 +82,22 @@ export default class EditPage extends Component {
 const styles = StyleSheet.create({
     scrollView: {
         backgroundColor: '#ffffee',
+    },
+    headerLogo: {
+        alignSelf:'center',
+        width: 40,
+        height: 40,
+        top: -110,
+    },
+    headerText: {
+        textAlign: 'center',
+        color: '#777777',
+        fontSize: 20,
+        height: 60,
+        top: -100,
+    },
+    contentView: {
+        top: -100,
     },
     icons: {
         position: 'absolute',
