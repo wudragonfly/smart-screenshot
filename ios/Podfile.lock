@@ -1,0 +1,52 @@
+PODS:
+  - QBImagePickerController (3.4.0)
+  - React (0.30.0):
+    - React/Core (= 0.30.0)
+  - react-native-image-crop-picker (0.4.3):
+    - QBImagePickerController (= 3.4.0)
+    - React (>= 0.26.1)
+    - RSKImageCropper (= 1.5.1)
+    - UIImage-Resize (~> 1.0)
+  - React/Core (0.30.0)
+  - React/RCTImage (0.30.0):
+    - React/Core
+    - React/RCTNetwork
+  - React/RCTNetwork (0.30.0):
+    - React/Core
+  - React/RCTText (0.30.0):
+    - React/Core
+  - React/RCTWebSocket (0.30.0):
+    - React/Core
+  - RNVectorIcons (2.0.3):
+    - React
+  - RSKImageCropper (1.5.1)
+  - UIImage-Resize (1.0.1)
+
+DEPENDENCIES:
+  - react-native-image-crop-picker (from `../node_modules/react-native-image-crop-picker/ios`)
+  - React/Core (from `../node_modules/react-native`)
+  - React/RCTImage (from `../node_modules/react-native`)
+  - React/RCTNetwork (from `../node_modules/react-native`)
+  - React/RCTText (from `../node_modules/react-native`)
+  - React/RCTWebSocket (from `../node_modules/react-native`)
+  - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+
+EXTERNAL SOURCES:
+  React:
+    :path: ../node_modules/react-native
+  react-native-image-crop-picker:
+    :path: ../node_modules/react-native-image-crop-picker/ios
+  RNVectorIcons:
+    :path: ../node_modules/react-native-vector-icons
+
+SPEC CHECKSUMS:
+  QBImagePickerController: d54cf93db6decf26baf6ed3472f336ef35cae022
+  React: ed499ad8bb72560821a80fefa59e15a18f3ec75c
+  react-native-image-crop-picker: 4214610da0508d0d9bd87878989c624f701e1d0b
+  RNVectorIcons: 39a5d8b29e83a462cd8d16185144d308edc9273f
+  RSKImageCropper: edd65fedb3734332818deb139906d6b7f54b8a44
+  UIImage-Resize: fa776860f10e6900bbaf53a73e494bdceaaccc77
+
+PODFILE CHECKSUM: 9e93de2f1f34b331b41b714fd3e94f3dd294e008
+
+COCOAPODS: 1.0.1
