@@ -82,6 +82,7 @@ export default class EditPage extends Component {
 const styles = StyleSheet.create({
     scrollView: {
         backgroundColor: '#ffffee',
+        marginBottom: -100,
     },
     headerLogo: {
         alignSelf:'center',
