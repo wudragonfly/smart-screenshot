@@ -87,7 +87,7 @@ export default class EditPage extends Component {
     };
 
     bottomRightButtonPressIn = (index) => {
-        this.bottomRightTimer = setInterval(() => {this.bottomRightButtonPress(index);}, 120);
+        this.bottomRightTimer = setInterval(() => {this.bottomRightButtonPress(index);}, 80);
     };
 
     bottomRightButtonPressOut = () => {
@@ -96,6 +96,7 @@ export default class EditPage extends Component {
 
 
     render() {
+        let scale = Dimensions.get('window').scale;
         let imageCount = this.state.images.length;
         let imageHeight = this.state.images[0].height;
         let imageWidth = this.state.images[0].width;
@@ -104,18 +105,19 @@ export default class EditPage extends Component {
         this.state.images.map((item, index) => {
             item.resizeHeight = resizeHeight;
             item.resizeWidth = windowWidth;
+            item.scale = scale;
             if (index !== 0) {
-                item.topInset = item.topInset === undefined ? 20 : item.topInset;
+                item.topInset = item.topInset === undefined ? 92 : item.topInset;
             } else {
                 item.topInset = item.topInset === undefined ? 0 : item.topInset;
             }
             if (index !== imageCount - 1) {
-                item.bottomInset = item.bottomInset === undefined ? 20 : item.bottomInset;
+                item.bottomInset = item.bottomInset === undefined ? 55 : item.bottomInset;
             } else {
                 item.bottomInset = item.bottomInset === undefined ? 0 : item.bottomInset;
             }
+            console.log(index + ") top:" + item.topInset + ", bottom:" + item.bottomInset);
         });
-        console.log(this.state.images);
 
         return (
             <ScrollView style={styles.scrollView}

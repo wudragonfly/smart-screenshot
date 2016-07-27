@@ -69,12 +69,12 @@ export default styles = StyleSheet.create({
         justifyContent:'center',
     },
     icon: {
-        width: 30,
-        height: 30,
-        borderRadius: 15,
+        width: 50,
+        height: 50,
+        borderRadius: 25,
         backgroundColor:'#00000070',
         textAlign: 'center',
-        paddingTop: 6,
+        paddingTop: 16,
     },
     topLeftIcon: {
         flex: 1,
@@ -115,6 +115,6 @@ export default styles = StyleSheet.create({
     },
     footerView: {
         top: -100,
-        height: 50,
+        height: 70,
     }
 });

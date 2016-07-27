@@ -15,15 +15,15 @@ RCT_EXPORT_MODULE();
 RCT_EXPORT_METHOD(generateImage:(NSArray *)images callback:(RCTResponseSenderBlock)callback)
 {
   CGFloat totalHeight = 0.0f;
-  CGFloat totalWidth = 0.0f;
+  CGFloat totalScale = [(NSNumber *)images[0][@"scale"] floatValue];
+  CGFloat totalWidth = [(NSNumber *)images[0][@"resizeWidth"] floatValue] * totalScale;
   for (NSDictionary *image in images) {
     CGFloat resizeHeight = [(NSNumber *)image[@"resizeHeight"] floatValue];
-    CGFloat resizeWidth = [(NSNumber *)image[@"resizeWidth"] floatValue];
     CGFloat topInset = [(NSNumber *)image[@"topInset"] floatValue];
     CGFloat bottomInset = [(NSNumber *)image[@"bottomInset"] floatValue];
     totalHeight += (resizeHeight - topInset - bottomInset);
-    totalWidth = resizeWidth;
   }
+  totalHeight = totalHeight * totalScale;
   
   CGSize contextSize = CGSizeMake(totalWidth, totalHeight);
   UIGraphicsBeginImageContextWithOptions(contextSize, NO, 1.0);
@@ -31,10 +31,10 @@ RCT_EXPORT_METHOD(generateImage:(NSArray *)images callback:(RCTResponseSenderBlo
   // iterately drawing cropped images in current context
   CGFloat currentDrawingOffsetY = 0;
   for (NSDictionary *image in images) {
-    CGFloat resizeHeight = [(NSNumber *)image[@"resizeHeight"] floatValue];
-    CGFloat resizeWidth = [(NSNumber *)image[@"resizeWidth"] floatValue];
-    CGFloat topInset = [(NSNumber *)image[@"topInset"] floatValue];
-    CGFloat bottomInset = [(NSNumber *)image[@"bottomInset"] floatValue];
+    CGFloat resizeHeight = [(NSNumber *)image[@"resizeHeight"] floatValue] * totalScale;
+    CGFloat resizeWidth = [(NSNumber *)image[@"resizeWidth"] floatValue] * totalScale;
+    CGFloat topInset = [(NSNumber *)image[@"topInset"] floatValue] * totalScale;
+    CGFloat bottomInset = [(NSNumber *)image[@"bottomInset"] floatValue] * totalScale;
     NSString *file = image[@"path"];
     UIImage *imageObject = [[UIImage alloc] initWithContentsOfFile:file];
     UIImage *resizeImageObject = [self imageWithImage:imageObject scaledToSize:CGSizeMake(resizeWidth, resizeHeight)];
