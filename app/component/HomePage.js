@@ -13,13 +13,13 @@ import {
 } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-crop-picker';
+import styles from '../style/Styles';
 
 export default class HomePage extends Component {
     showImagePicker = () => {
         ImagePicker.openPicker({
            multiple: true
         }).done(images => {
-            console.log(images);
             Actions.edit({images: images});
         });
 
@@ -39,29 +39,3 @@ export default class HomePage extends Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#ffffee',
-    },
-    appTitle: {
-        fontSize: 28,
-        textAlign: 'center',
-        margin: 10,
-        color: "#777777",
-    },
-    logoImage: {
-        margin: 50,
-    },
-    iconButtonView: {
-        margin: 30,
-    },
-    iconButtonText: {
-        fontFamily: 'Arial',
-        fontSize: 15,
-        color: 'white',
-    }
-});

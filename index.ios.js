@@ -19,30 +19,12 @@ import {
   Router,
   Actions
 } from 'react-native-router-flux';
-import HomePage from './component/HomePage';
-import EditPage from './component/EditPage';
-import PreviewPage from './component/PreviewPage';
+import HomePage from './app/component/HomePage';
+import EditPage from './app/component/EditPage';
+import PreviewPage from './app/component/PreviewPage';
 
 
 class SmartScreenshot extends Component {
-  onPreviewPressed = () => {
-    Actions.preview();
-  };
-
-  onSavePressed = () => {
-    alert("saved!");
-  };
-
-  backToHome = () => {
-    alert("back to home");
-    Actions.pop();
-  };
-
-  backToEdit = () => {
-    alert("back to edit");
-    Actions.pop();
-  }
-
   render() {
     return (
         <Router>
@@ -51,16 +33,12 @@ class SmartScreenshot extends Component {
             />
             <Scene key="edit" component={EditPage} hideNavBar={false} title="Edit"
                    backTitle="Home"
-                   onBack={this.backToHome}
-                   rightTitle="Preview"
-                   onRight={this.onPreviewPressed}
+                   onBack={Actions.home}
                    sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}
             />
             <Scene key="preview" component={PreviewPage} hideNavBar={false} title="Preview"
                    backTitle="Edit"
-                   onBack={this.backToEdit}
-                   rightTitle="Save"
-                   onRight={this.onSavePressed}
+                   onBack={Actions.edit}
                    sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}
             />
           </Scene>
