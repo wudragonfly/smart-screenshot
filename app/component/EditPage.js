@@ -103,6 +103,7 @@ export default class EditPage extends Component {
         let resizeHeight = imageHeight / imageWidth * windowWidth;
         this.state.images.map((item, index) => {
             item.resizeHeight = resizeHeight;
+            item.resizeWidth = windowWidth;
             if (index !== 0) {
                 item.topInset = item.topInset === undefined ? 20 : item.topInset;
             } else {
@@ -114,6 +115,7 @@ export default class EditPage extends Component {
                 item.bottomInset = item.bottomInset === undefined ? 0 : item.bottomInset;
             }
         });
+        console.log(this.state.images);
 
         return (
             <ScrollView style={styles.scrollView}

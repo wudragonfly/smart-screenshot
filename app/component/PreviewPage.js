@@ -18,6 +18,9 @@ import {
 } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../style/Styles';
+import { NativeModules } from 'react-native';
+import Toast from 'react-native-root-toast';
+SSImageGenerator = NativeModules.SSImageGenerator;
 
 export default class PreviewPage extends Component {
     constructor(props) {
@@ -26,7 +29,14 @@ export default class PreviewPage extends Component {
     }
 
     rightButtonPress = () => {
-        alert('save');
+        SSImageGenerator.generateImage(this.state.images, (result) => {
+            console.log(result);
+        });
+        setTimeout(() => {Toast.show("Photo Successfully Saved",{
+                duration: Toast.durations.LONG,
+                position: -60,
+            });},
+        200);
     };
 
     leftButtonPress = () => {
