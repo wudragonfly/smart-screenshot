@@ -3,10 +3,6 @@ import React, {
     CSSPropertyOperations,
 } from 'react';
 import {
-    AppRegistry,
-    StyleSheet,
-    CameraRoll,
-    StatusBar,
     ScrollView,
     Dimensions,
     TouchableOpacity,
@@ -23,7 +19,18 @@ import styles from '../style/Styles';
 export default class EditPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {images: props.images};
+        let scale = Dimensions.get('window').scale; // screen scale, 2 for 4/4S/5/5S/6/6S, 3 for 6+/6S+
+        let windowWidth = Dimensions.get('window').width; // screen width in point. 320 for 4/4S, 375 for 5/5S/6/6S, 414 for 6+/6S+
+        this.state = {
+            images: props.images
+        }
+        this.state.images.map((item) => {
+            item.resizeHeight = Number.parseInt(item.height / item.width * windowWidth); // resize image height in point
+            item.resizeWidth = windowWidth;
+            item.scale = scale;
+            item.topInsetInPoint = Number.parseInt(item.topInset * item.resizeHeight / item.height);
+            item.bottomInsetInPoint = Number.parseInt(item.bottomInset * item.resizeHeight / item.height);
+        });
     }
 
     rightButtonPress = () => {
@@ -34,60 +41,80 @@ export default class EditPage extends Component {
         Actions.pop();
     };
 
+    // top left button event handling
     topLeftButtonPress = (index) => {
-        if (this.state.images[index].topInset + this.state.images[index].bottomInset < this.state.images[index].resizeHeight) {
-            this.state.images[index].topInset +=1;
-            this.forceUpdate();
+        let images = this.state.images;
+        let {topInsetInPoint, bottomInsetInPoint, resizeHeight} = images[index];
+        if (topInsetInPoint + bottomInsetInPoint < resizeHeight) {
+            images[index].topInsetInPoint += 1;
+            this.setState({
+                images: images
+            });
         }
     };
 
     topLeftButtonPressIn = (index) => {
-        this.topLeftTimer = setInterval(() => {this.topLeftButtonPress(index);}, 120);
+        this.topLeftTimer = setInterval(() => {this.topLeftButtonPress(index);}, 100);
     };
 
     topLeftButtonPressOut = () => {
         clearInterval(this.topLeftTimer);
     };
 
+    // top right button event handling
     topRightButtonPress = (index) => {
-        if (this.state.images[index].topInset > 0) {
-            this.state.images[index].topInset -=1;
-            this.forceUpdate();
+        let images = this.state.images;
+        let {topInsetInPoint} = images[index];
+        if (topInsetInPoint > 0) {
+            images[index].topInsetInPoint -= 1;
+            this.setState({
+                images: images
+            });
         }
     };
 
     topRightButtonPressIn = (index) => {
-        this.topRightTimer = setInterval(() => {this.topRightButtonPress(index);}, 120);
+        this.topRightTimer = setInterval(() => {this.topRightButtonPress(index);}, 100);
     };
 
     topRightButtonPressOut = () => {
         clearInterval(this.topRightTimer);
     };
 
+    // bottom left button event handling
     bottomLeftButtonPress = (index) => {
-        if (this.state.images[index].bottomInset > 0) {
-            this.state.images[index].bottomInset -=1;
-            this.forceUpdate();
+        let images = this.state.images;
+        let {bottomInsetInPoint} = images[index];
+        if (bottomInsetInPoint > 0) {
+            images[index].bottomInsetInPoint -=1;
+            this.setState({
+                images: images
+            });
         }
     };
 
     bottomLeftButtonPressIn = (index) => {
-        this.bottomLeftTimer = setInterval(() => {this.bottomLeftButtonPress(index);}, 120);
+        this.bottomLeftTimer = setInterval(() => {this.bottomLeftButtonPress(index);}, 100);
     };
 
     bottomLeftButtonPressOut = () => {
         clearInterval(this.bottomLeftTimer);
     };
 
+    // bottom right button event handling
     bottomRightButtonPress = (index) => {
-        if (this.state.images[index].topInset + this.state.images[index].bottomInset < this.state.images[index].resizeHeight) {
-            this.state.images[index].bottomInset +=1;
-            this.forceUpdate();
+        let images = this.state.images;
+        let {topInsetInPoint, bottomInsetInPoint, resizeHeight} = images[index];
+        if (topInsetInPoint + bottomInsetInPoint < resizeHeight) {
+            images[index].bottomInsetInPoint +=1;
+            this.setState({
+                images: images
+            });
         }
     };
 
     bottomRightButtonPressIn = (index) => {
-        this.bottomRightTimer = setInterval(() => {this.bottomRightButtonPress(index);}, 80);
+        this.bottomRightTimer = setInterval(() => {this.bottomRightButtonPress(index);}, 100);
     };
 
     bottomRightButtonPressOut = () => {
@@ -96,48 +123,18 @@ export default class EditPage extends Component {
 
 
     render() {
-        let scale = Dimensions.get('window').scale;
-        let imageCount = this.state.images.length;
-        let imageHeight = this.state.images[0].height;
-        let imageWidth = this.state.images[0].width;
-        let windowWidth = Dimensions.get('window').width;
-        let resizeHeight = imageHeight / imageWidth * windowWidth;
-        this.state.images.map((item, index) => {
-            item.resizeHeight = resizeHeight;
-            item.resizeWidth = windowWidth;
-            item.scale = scale;
-            if (index !== 0) {
-                item.topInset = item.topInset === undefined ? 92 : item.topInset;
-            } else {
-                item.topInset = item.topInset === undefined ? 0 : item.topInset;
-            }
-            if (index !== imageCount - 1) {
-                item.bottomInset = item.bottomInset === undefined ? 55 : item.bottomInset;
-            } else {
-                item.bottomInset = item.bottomInset === undefined ? 0 : item.bottomInset;
-            }
-            console.log(index + ") top:" + item.topInset + ", bottom:" + item.bottomInset);
-        });
 
         return (
-            <ScrollView style={styles.scrollView}
-                        showsVerticalScrollIndicator={false}>
+            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                 <Image style={styles.headerLogo} source={require('../image/logo.png')}/>
                 <Text style={styles.headerText}>Smart Screenshot</Text>
                 <View style={styles.contentView}>
                 {
                     this.state.images.map((item, index) => {
-                        let currentWrapperHeight = resizeHeight - item.topInset - item.bottomInset;
-                        let viewRef = "view" + index;
-                        let imageRef = "image" + index;
+                        let currentWrapperHeight = item.resizeHeight - item.topInsetInPoint - item.bottomInsetInPoint;
                         return (
-                            <View key={index}
-                                  style={[styles.imageWrapper, {height:currentWrapperHeight}]}
-                                  ref={viewRef}>
-                                <Image source={{uri: item.path}}
-                                       style={[styles.absoluteImage, {height: resizeHeight, top: -item.topInset}]}
-                                       ref={imageRef}
-                                />
+                            <View key={index} style={[styles.imageWrapper, {height:currentWrapperHeight}]}>
+                                <Image source={{uri: item.path}} style={[styles.absoluteImage, {height: item.resizeHeight, top: -item.topInsetInPoint}]}/>
                                 <View style={[styles.icons, {height:currentWrapperHeight}]}>
                                     <View style={styles.topIcons}>
                                         <TouchableOpacity style={[styles.topLeftIcon]}

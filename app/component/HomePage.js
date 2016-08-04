@@ -7,6 +7,7 @@ import {
     Image,
     View,
     Text,
+    NativeModules,
 } from 'react-native';
 import {
     Actions
@@ -14,13 +15,16 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ImagePicker from 'react-native-image-crop-picker';
 import styles from '../style/Styles';
+SSImageMarginDetector = NativeModules.SSImageMarginDetector;
 
 export default class HomePage extends Component {
     showImagePicker = () => {
         ImagePicker.openPicker({
            multiple: true
         }).done(images => {
-            Actions.edit({images: images});
+            SSImageMarginDetector.detectMarginsOfImages(images, (error, newImages) => {
+                Actions.edit({images: newImages});
+            });
         });
 
     };

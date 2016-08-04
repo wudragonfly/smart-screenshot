@@ -29,18 +29,15 @@ class SmartScreenshot extends Component {
     return (
         <Router>
           <Scene key="root">
-            <Scene key="home" component={HomePage} hideNavBar={true} initial={true}
-            />
+            <Scene key="home" component={HomePage} hideNavBar={true} initial={true}/>
             <Scene key="edit" component={EditPage} hideNavBar={false} title="Edit"
                    backTitle="Home"
                    onBack={Actions.home}
-                   sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}
-            />
+                   sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}/>
             <Scene key="preview" component={PreviewPage} hideNavBar={false} title="Preview"
                    backTitle="Edit"
                    onBack={Actions.edit}
-                   sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}
-            />
+                   sceneStyle={{paddingTop: Navigator.NavigationBar.Styles.General.TotalNavHeight}}/>
           </Scene>
         </Router>
     );

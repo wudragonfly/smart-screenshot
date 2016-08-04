@@ -24,6 +24,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		E02FF8B51250B93B30701EF5 /* libPods-SmartScreenshot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21BC5E2EA782F925326A0C86 /* libPods-SmartScreenshot.a */; };
+		F541F1611D5343FF00FD3873 /* SSImageMarginDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = F541F1601D5343FF00FD3873 /* SSImageMarginDetector.m */; };
 		F5FC6B241D48995F0030614C /* SSImageGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = F5FC6B231D48995F0030614C /* SSImageGenerator.m */; };
 /* End PBXBuildFile section */
 
@@ -132,6 +133,8 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		EB3B9C8E13FE3921E51885F6 /* Pods-SmartScreenshot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartScreenshot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmartScreenshot/Pods-SmartScreenshot.debug.xcconfig"; sourceTree = "<group>"; };
 		F22E02EFCFD1ADC1DA33D7F7 /* Pods-SmartScreenshot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmartScreenshot.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmartScreenshot/Pods-SmartScreenshot.release.xcconfig"; sourceTree = "<group>"; };
+		F541F15F1D5343FF00FD3873 /* SSImageMarginDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSImageMarginDetector.h; path = SmartScreenshot/SSImageMarginDetector.h; sourceTree = "<group>"; };
+		F541F1601D5343FF00FD3873 /* SSImageMarginDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSImageMarginDetector.m; path = SmartScreenshot/SSImageMarginDetector.m; sourceTree = "<group>"; };
 		F5FC6B221D48995F0030614C /* SSImageGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSImageGenerator.h; path = SmartScreenshot/SSImageGenerator.h; sourceTree = "<group>"; };
 		F5FC6B231D48995F0030614C /* SSImageGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSImageGenerator.m; path = SmartScreenshot/SSImageGenerator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -251,6 +254,8 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				F5FC6B221D48995F0030614C /* SSImageGenerator.h */,
 				F5FC6B231D48995F0030614C /* SSImageGenerator.m */,
+				F541F15F1D5343FF00FD3873 /* SSImageMarginDetector.h */,
+				F541F1601D5343FF00FD3873 /* SSImageMarginDetector.m */,
 			);
 			name = SmartScreenshot;
 			sourceTree = "<group>";
@@ -632,6 +637,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F541F1611D5343FF00FD3873 /* SSImageMarginDetector.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				F5FC6B241D48995F0030614C /* SSImageGenerator.m in Sources */,

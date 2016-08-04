@@ -2,46 +2,49 @@ import React, {
     Component
 } from 'react';
 import {
-    AppRegistry,
-    StyleSheet,
-    CameraRoll,
-    StatusBar,
     ScrollView,
     Dimensions,
     TouchableOpacity,
     View,
     Image,
     Text,
+    NativeModules
 } from 'react-native';
 import {
     Actions
 } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import styles from '../style/Styles';
-import { NativeModules } from 'react-native';
 import Toast from 'react-native-root-toast';
+import styles from '../style/Styles';
 SSImageGenerator = NativeModules.SSImageGenerator;
 
 export default class PreviewPage extends Component {
     constructor(props) {
         super(props);
-        this.state = {images: props.images};
+        this.state = {
+            images: props.images
+        };
     }
 
     rightButtonPress = () => {
-        SSImageGenerator.generateImage(this.state.images, (result) => {
-            console.log(result);
-        });
-        setTimeout(() => {Toast.show("Photo Successfully Saved",{
+        SSImageGenerator.generateImage(this.state.images, (width, height) => {
+            let message;
+            if (width > 0 && height > 0) {
+                message = "Photo Successfully Saved";
+            } else {
+                message = "Failed to save photo";
+            }
+            Toast.show(message, {
                 duration: Toast.durations.LONG,
                 position: -60,
-            });},
-        200);
+            });
+        });
     };
 
     leftButtonPress = () => {
         Actions.pop();
     };
+
     render() {
         let imageHeight = this.state.images[0].height;
         let imageWidth = this.state.images[0].width;
@@ -56,17 +59,10 @@ export default class PreviewPage extends Component {
                 <View style={styles.contentView}>
                     {
                         this.state.images.map((item, index) => {
-                            let currentWrapperHeight = resizeHeight - item.topInset - item.bottomInset;
-                            let viewRef = "view" + index;
-                            let imageRef = "image" + index;
+                            let currentWrapperHeight = item.resizeHeight - item.topInsetInPoint - item.bottomInsetInPoint;
                             return (
-                                <View key={index}
-                                      style={[styles.imageWrapper, {height:currentWrapperHeight}]}
-                                      ref={viewRef}>
-                                    <Image source={{uri: item.path}}
-                                           style={[styles.absoluteImage, {height: resizeHeight, top: -item.topInset}]}
-                                           ref={imageRef}
-                                    />
+                                <View key={index} style={[styles.imageWrapper, {height:currentWrapperHeight}]}>
+                                    <Image source={{uri: item.path}} style={[styles.absoluteImage, {height: item.resizeHeight, top: -item.topInsetInPoint}]}/>
                                 </View>
                             )
                         })
