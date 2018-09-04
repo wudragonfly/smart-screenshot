@@ -1,2 +1,2 @@
 # smart-screenshot
-this is a react-native project for ms hackathon 2016
+This is a react-native project for ms hackathon 2016
